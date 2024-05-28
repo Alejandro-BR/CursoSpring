@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Playstation 5",
+        "price": 500
+    },
+    {
+        "id": 2,
+        "name": "Mando PS5",
+        "price": 80
+    },
+    {
+        "id": 3,
+        "name": "Teclado G413",
+        "price": 125
+    },
+    {
+        "id": 4,
+        "name": "Raton G205",
+        "price": 30
+    }
+]
