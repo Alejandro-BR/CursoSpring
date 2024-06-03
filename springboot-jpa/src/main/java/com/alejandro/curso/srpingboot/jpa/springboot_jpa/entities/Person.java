@@ -9,6 +9,7 @@
 package com.alejandro.curso.srpingboot.jpa.springboot_jpa.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +31,9 @@ public class Person {
 
     @Column(name = "programing_language")
     private String programingLanguage;
+
+    @Embedded
+    private Audit audit = new Audit();
 
     // Contructores
 
@@ -53,7 +57,7 @@ public class Person {
     @Override
     public String toString() {
         return "[id = " + id + ", name = " + name + ", lastname = " + lastname + ", programingLanguage = "
-                + programingLanguage + "]";
+                + programingLanguage + ", creatAt = " + audit.getCreatAt() + ", updatedAt = " + audit.getUpdatedAt() + "]";
     }
 
     public Long getId() {

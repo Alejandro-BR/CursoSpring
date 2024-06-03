@@ -36,7 +36,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		// findOne();
 		// list();
 		// create();
-		// update();
+		update();
 		// delete();
 		// delete2();
 		// personalizedQueries();
@@ -46,7 +46,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 		// personalizedQueriesBerween();
 		// queriesFunctionAggregation();
 		// subQueries();
-		whereIn();
+		// whereIn();
 	}
 
 	@Transactional(readOnly = true)
