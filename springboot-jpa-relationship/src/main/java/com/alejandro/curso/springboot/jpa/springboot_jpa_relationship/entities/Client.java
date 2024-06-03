@@ -8,8 +8,8 @@
 
 package com.alejandro.curso.springboot.jpa.springboot_jpa_relationship.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,16 +36,19 @@ public class Client {
 
     // , fetch = FetchType.EAGER
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses;
+    private Set<Address> addresses;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
+    private Set<Invoice> invoices;
 
     // Contructores
 
     public Client() {
-        this.addresses = new ArrayList<>();
+        this.addresses = new HashSet<>();
     }
 
     public Client(String name, String lastname) {
-        this.addresses = new ArrayList<>();
+        this.addresses = new HashSet<>();
         this.name = name;
         this.lastname = lastname;
     }
@@ -64,14 +67,6 @@ public class Client {
         return name;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -84,9 +79,30 @@ public class Client {
         this.lastname = lastname;
     }
 
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Set<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
     @Override
     public String toString() {
-        return "[id = " + id + ", name = " + name + ", lastname = " + lastname + ", addresses = " + addresses + "]";
+        return "[id = " + id +
+                ", name = " + name +
+                ", lastname = " + lastname +
+                ", invoices = " + invoices +
+                ", addresses = " + addresses +
+                "]";
     }
 
 }

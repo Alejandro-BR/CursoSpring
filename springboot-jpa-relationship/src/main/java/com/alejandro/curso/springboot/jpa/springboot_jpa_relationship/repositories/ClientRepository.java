@@ -18,7 +18,12 @@ import com.alejandro.curso.springboot.jpa.springboot_jpa_relationship.entities.C
 public interface ClientRepository extends CrudRepository<Client, Long> {
 
     @Query("select c from Client c left join fetch c.addresses where c.id=?1")
-    Optional<Client> findOne(Long id);
+    Optional<Client> findOneAddresesses(Long id);
     
+    @Query("select c from Client c left join fetch c.invoices where c.id=?1")
+    Optional<Client> findOneWirhInvoices(Long id);
+
+    @Query("select c from Client c left join fetch c.invoices left join fetch c.addresses where c.id=?1")
+    Optional<Client> findOne(Long id);
 
 }

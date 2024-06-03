@@ -1,9 +1,11 @@
 package com.alejandro.curso.springboot.jpa.springboot_jpa_relationship;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+// import java.util.ArrayList;
+// import java.util.Arrays;
+import java.util.HashSet;
+// import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -38,40 +40,130 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 		// OneToMany();
 		// OneToManyFinById();
 		// removeAddress();
-		removeAddressFindById();
+		// removeAddressFindById();
+		// OneToManyInvoiceBidireccional();
+		// OneToManyInvoiceBidireccionalFindById();
+		removerInvoiceBidireccionalFindById();
 	}
 
-@Transactional
-public void removeAddressFindById() {
-    Optional<Client> optionalClient = clientRepository.findOne(1L);
+	@Transactional
+	public void removerInvoiceBidireccionalFindById() {
 
-    if (!optionalClient.isPresent()) {
-        System.out.println("No se encontró el cliente con ID 1");
-        return;
-    }
+		Optional<Client> optionalClient = clientRepository.findOne(1L);
 
-    optionalClient.ifPresent(client -> {
-        Address address1 = new Address("Malaga", 1234);
-        Address address2 = new Address("Madrid", 4321);
+		optionalClient.ifPresent(client -> {
 
-        client.setAddresses(Arrays.asList(address1, address2));
+			Invoice invoice1 = new Invoice("Compras de la casa", 5000L);
+			Invoice invoice2 = new Invoice("Compras de oficina", 8000L);
 
-        clientRepository.save(client);
+			Set<Invoice> invoices = new HashSet<>();
+			invoices.add(invoice2);
+			invoices.add(invoice1);
+			client.setInvoices(invoices);
 
-        System.out.println("\033[0;94m" + client + "\033[0;0m");
+			invoice1.setClient(client);
+			invoice2.setClient(client);
+	
+			clientRepository.save(client);
+	
+			System.out.println("\033[0;94m" + client + "\033[0;0m");
+		});
 
-        optionalClient.ifPresent(c -> {
-            List<Address> currentAddresses = new ArrayList<>(c.getAddresses());
-            currentAddresses.remove(address1);
-            c.setAddresses(currentAddresses);
-            clientRepository.save(c);
+		Optional<Client> optionalClientDB = clientRepository.findOne(1L);
 
-            System.out.println("\033[0;94m" + c + "\033[0;0m");
-        });
-    });
+		optionalClientDB.ifPresent(client -> {
+			Optional<Invoice> optionalInvoice = invoiceRepository.findById(2L);
+			optionalInvoice.ifPresent(invoice -> {
+				
+				client.getInvoices().remove(invoice);
+				invoice.setClient(null);
 
-}
+				clientRepository.save(client);
 
+				System.out.println("\033[0;94m" + client + "\033[0;0m");
+			});
+		});
+	}
+
+	@Transactional
+	public void OneToManyInvoiceBidireccionalFindById() {
+
+		Optional<Client> optionalClient = clientRepository.findOneWirhInvoices(1L);
+
+		optionalClient.ifPresent(client -> {
+
+			Invoice invoice1 = new Invoice("Compras de la casa", 5000L);
+			Invoice invoice2 = new Invoice("Compras de oficina", 8000L);
+
+			Set<Invoice> invoices = new HashSet<>();
+			// List<Invoice> invoices = new ArrayList<>();
+			invoices.add(invoice2);
+			invoices.add(invoice1);
+			client.setInvoices(invoices);
+
+			invoice1.setClient(client);
+			invoice2.setClient(client);
+	
+			clientRepository.save(client);
+	
+			System.out.println("\033[0;94m" + client + "\033[0;0m");
+		});
+	}
+
+	@Transactional
+	public void OneToManyInvoiceBidireccional() {
+
+		Client client = new Client("Fran", "Moras");
+
+		Invoice invoice1 = new Invoice("Compras de la casa", 5000L);
+		Invoice invoice2 = new Invoice("Compras de oficina", 8000L);
+
+		Set<Invoice> invoices = new HashSet<>();
+		// List<Invoice> invoices = new ArrayList<>();
+		invoices.add(invoice2);
+		invoices.add(invoice1);
+		client.setInvoices(invoices);
+
+		invoice1.setClient(client);
+		invoice2.setClient(client);
+
+		clientRepository.save(client);
+
+		System.out.println("\033[0;94m" + client + "\033[0;0m");
+
+	}
+
+	// @Transactional
+	// public void removeAddressFindById() {
+	// 	Optional<Client> optionalClient = clientRepository.findOne(1L);
+	// 	// Optional<Client> optionalClient = clientRepository.findOneAddresesses(1L);
+
+	// 	if (!optionalClient.isPresent()) {
+	// 		System.out.println("No se encontró el cliente con ID 1");
+	// 		return;
+	// 	}
+
+	// 	optionalClient.ifPresent(client -> {
+	// 		Address address1 = new Address("Malaga", 1234);
+	// 		Address address2 = new Address("Madrid", 4321);
+
+	// 		client.setAddresses(Arrays.asList(address1, address2));
+
+	// 		clientRepository.save(client);
+
+	// 		System.out.println("\033[0;94m" + client + "\033[0;0m");
+
+	// 		optionalClient.ifPresent(c -> {
+	// 			List<Address> currentAddresses = new ArrayList<>(c.getAddresses());
+	// 			currentAddresses.remove(address1);
+	// 			c.setAddresses(currentAddresses);
+	// 			clientRepository.save(c);
+
+	// 			System.out.println("\033[0;94m" + c + "\033[0;0m");
+	// 		});
+	// 	});
+
+	// }
 
 	@Transactional
 	public void removeAddress() {
@@ -96,21 +188,21 @@ public void removeAddressFindById() {
 		});
 	}
 
-	@Transactional
-	public void OneToManyFinById() {
-		Optional<Client> optionalClient = clientRepository.findById(1L);
+	// @Transactional
+	// public void OneToManyFinById() {
+	// 	Optional<Client> optionalClient = clientRepository.findById(1L);
 
-		optionalClient.ifPresent(client -> {
-			Address address1 = new Address("Malaga", 1234);
-			Address address2 = new Address("Madrid", 4321);
+	// 	optionalClient.ifPresent(client -> {
+	// 		Address address1 = new Address("Malaga", 1234);
+	// 		Address address2 = new Address("Madrid", 4321);
 
-			client.setAddresses(Arrays.asList(address1, address2));
+	// 		client.setAddresses(Arrays.asList(address1, address2));
 
-			clientRepository.save(client);
+	// 		clientRepository.save(client);
 
-			System.out.println("\033[0;94m" + client + "\033[0;0m");
-		});
-	}
+	// 		System.out.println("\033[0;94m" + client + "\033[0;0m");
+	// 	});
+	// }
 
 	@Transactional
 	public void OneToMany() {
