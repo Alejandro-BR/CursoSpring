@@ -1,3 +1,12 @@
+/**
+ * Clase  ProductController:
+ * 
+ * En esta clase se se controla la clse Product.
+ * Direccion: /api/products
+ * 
+ *  @author Alejandro Barrionuevo Rosado
+ */
+
 package com.alejandro.curso.springboot.app.springboot_crud.controllers;
 
 import java.util.HashMap;

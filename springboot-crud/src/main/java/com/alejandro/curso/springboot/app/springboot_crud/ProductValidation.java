@@ -5,6 +5,12 @@
  * 
  * Es una de las opciones que se pueden hacer para validar. 
  * 
+ * Opciones que hay:
+ *  - Utilizando el properties y unas anotaciones en product. (Implementado)
+ *  - Esta opcion de una clase personalizada para validar.    (Implementado)
+ *  - Anotaciones personalizadas.                             (no implementado)
+ *  - Anotaciones check Db.                                   (no implementado)
+ * 
  *  @author Alejandro Barrionuevo Rosado
  */
 
