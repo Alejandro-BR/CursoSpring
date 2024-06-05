@@ -20,7 +20,7 @@ import com.alejandro.curso.springboot.app.springboot_crud.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -31,8 +31,14 @@ public class UserController {
         return service.findAll();
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@Valid @RequestBody User user, BindingResult result) {
+        user.setAdmin(false);
+        return create(user, result);
+    }
+
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody User user, BindingResult result) {
+    private ResponseEntity<?> create(@Valid @RequestBody User user, BindingResult result) {
 
         if (result.hasFieldErrors()) {
             return validation(result);
