@@ -12,7 +12,9 @@ import com.alejandro.curso.springboot.app.springboot_crud.entities.User;
 import com.alejandro.curso.springboot.app.springboot_crud.repositories.RoleRepository;
 import com.alejandro.curso.springboot.app.springboot_crud.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
