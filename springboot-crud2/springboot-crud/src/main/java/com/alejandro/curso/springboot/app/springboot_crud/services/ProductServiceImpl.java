@@ -69,6 +69,12 @@ public class ProductServiceImpl implements ProductService {
         return productOptional;
     }
 
+    @Override
+    public boolean existsBySku(String value) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'existsBySku'");
+    }
+
 
 
 }

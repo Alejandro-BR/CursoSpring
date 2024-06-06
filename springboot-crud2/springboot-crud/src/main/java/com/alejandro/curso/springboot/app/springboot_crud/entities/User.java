@@ -3,6 +3,7 @@ package com.alejandro.curso.springboot.app.springboot_crud.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alejandro.curso.springboot.app.springboot_crud.validation.ExistsByUsername;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,6 +30,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ExistsByUsername
     @Column(unique = true)
     @NotBlank
     @Size(min = 4, max = 12)
